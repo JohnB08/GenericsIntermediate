@@ -2,6 +2,8 @@ using Generics.Interfaces;
 
 namespace Generics.Models;
 
+//Siden AnimalPen skal implementere både pushing og popping metodene,
+//må den inherite både IAnimalPopper og IAnimalPusher.
 public class AnimalPen<T>(int animalCount): IAnimalPopper<T>, IAnimalPusher<T>
 {
     private int _position;
