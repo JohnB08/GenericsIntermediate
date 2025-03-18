@@ -1,6 +1,6 @@
 namespace Generics.Interfaces;
 
-public interface IPushable<T>
+public interface IPushable<in T>
 {
     void Push(T obj);
 }

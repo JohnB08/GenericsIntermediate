@@ -4,7 +4,7 @@ namespace Generics.Models;
 
 public class ZooFeeder
 {
-    public static void Feed(IPoppable<Animal> animals)
+    public static void Feed(IAnimalPopper<Animal> animals)
     {
         for (int i = 0; i < animals.Count(); i++)
         {

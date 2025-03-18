@@ -5,6 +5,7 @@
     La oss se på et eksempel nedenfor hvor vi skal lage en enkel "stack" som skal lagre tall i en stack: */
 
 using System.Net.Http.Headers;
+using Generics.Interfaces;
 using Generics.Models;
 
 class Program
@@ -75,7 +76,6 @@ class Program
         ZooFeeder.Feed(bearPen);
 
         ZooFeeder.Feed(camelPen);
-
     }
 }
 
