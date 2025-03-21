@@ -4,8 +4,6 @@
         Generics er verktøyet i C# som lar oss designe og skrive kode, som er gjennbrukbar for flere datatyper.
     La oss se på et eksempel nedenfor hvor vi skal lage en enkel "stack" som skal lagre tall i en stack: */
 
-using System.Net.Http.Headers;
-using Generics.Interfaces;
 using Generics.Models;
 
 class Program
@@ -55,17 +53,17 @@ class Program
 
         //La oss lage noen bjørner:
 
-        var bear1 = new Bear("Oluf", FoodConsumtion.Carnivore, 12, "Brown");
+        var bear1 = new Bear("Oluf", FoodConsumption.Carnivore, 12, "Brown");
 
-        var bear2 = new Bear("Randi", FoodConsumtion.Carnivore, 10, "Brown");
+        var bear2 = new Bear("Randi", FoodConsumption.Carnivore, 10, "Brown");
 
         bearPen.Push(bear1);
         bearPen.Push(bear2);
 
         //La oss så lage to kameler:
 
-        var camel1 = new Camel("Kari", FoodConsumtion.Herbivore, 8, 2);
-        var camel2 = new Camel("Oscar", FoodConsumtion.Herbivore, 10, 2);
+        var camel1 = new Camel("Kari", FoodConsumption.Herbivore, 8, 2);
+        var camel2 = new Camel("Oscar", FoodConsumption.Herbivore, 10, 2);
 
         camelPen.Push(camel1);
         camelPen.Push(camel2);
@@ -76,6 +74,66 @@ class Program
         ZooFeeder.Feed(bearPen);
 
         ZooFeeder.Feed(camelPen);
+
+
+
+        // Oppretting av flere dyreinnhegninger
+        var lionPen = new AnimalPen<Lion>(5);
+        var elephantPen = new AnimalPen<Elephant>(3);
+        var penguinPen = new AnimalPen<Penguin>(10);
+
+        // Legger til dyr
+        lionPen.Push(new Lion("Simba", FoodConsumption.Carnivore, 5, "Golden"));
+        lionPen.Push(new Lion("Nala", FoodConsumption.Carnivore, 4, "Tan"));
+        lionPen.Push(new Lion("Mufasa", FoodConsumption.Carnivore, 12, "Dark Brown"));
+
+        elephantPen.Push(new Elephant("Dumbo", FoodConsumption.Herbivore, 3, 1.2));
+        elephantPen.Push(new Elephant("Ellie", FoodConsumption.Herbivore, 15, 2.8));
+
+        penguinPen.Push(new Penguin("Pingu", FoodConsumption.Carnivore, 2, false));
+        penguinPen.Push(new Penguin("Emperor", FoodConsumption.Carnivore, 7, true));
+        penguinPen.Push(new Penguin("Happy", FoodConsumption.Carnivore, 4, false));
+        penguinPen.Push(new Penguin("Gloria", FoodConsumption.Carnivore, 6, false));
+
+        // Mater alle dyrene
+        ZooFeeder.Feed(lionPen);
+        ZooFeeder.Feed(elephantPen);
+        ZooFeeder.Feed(penguinPen);
+
+        // Oppretter dyreshow med løver
+        var lionShow = new AnimalShow<Lion>([
+            new Lion("Leo", FoodConsumption.Carnivore, 8, "Black"),
+            new Lion("Leona", FoodConsumption.Carnivore, 7, "Spotted")
+        ]);
+
+        // Oppretter dyreshow med elefanter
+        var elephantShow = new AnimalShow<Elephant>([
+            new Elephant("Jumbo", FoodConsumption.Herbivore, 20, 3.5),
+            new Elephant("Tiny", FoodConsumption.Herbivore, 2, 0.8)
+        ]);
+
+        // Kjører dyreshow - fungerer takket være kovarianse
+        ZooManager.RunShow(lionShow);
+        ZooManager.RunShow(elephantShow);
+        // Oppretter dyresorterere
+        var animalSorter = new AnimalSorter<Animal>();
+
+        // Organiserer utstillinger - fungerer takket være kontravarianse
+        List<Lion> allLions = [
+            new Lion("King", FoodConsumption.Carnivore, 10, "Golden"),
+            new Lion("Queen", FoodConsumption.Carnivore, 8, "Light Brown"),
+            new Lion("Prince", FoodConsumption.Carnivore, 2, "Golden")
+        ];
+
+        ZooManager.OrganizeExhibit(allLions, animalSorter); // AnimalSorter<Animal> brukes for IEnumerable<Lion>
+
+        // Oppretter en generisk beholder for alle typer dyr
+        var generalPen = new AnimalPen<Animal>(20);
+
+        // Demonstrerer både kovarianse og kontravarianse
+        ZooManager.FeedAndTrain(lionPen, generalPen);
+        ZooManager.FeedAndTrain(elephantPen, generalPen);
+        ZooManager.FeedAndTrain(penguinPen, generalPen);
     }
 }
 

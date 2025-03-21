@@ -1,5 +1,5 @@
 namespace Generics.Models;
-public enum FoodConsumtion
+public enum FoodConsumption
 {
     Herbivore,
     Carnivore,
